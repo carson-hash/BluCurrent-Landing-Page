@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+  <!-- SECURITY: basic CSP hardening -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self' https: data:;
+                 style-src 'self' 'unsafe-inline' https:;
+                 script-src 'self' 'unsafe-inline';">
+
+  <title>Landing Page</title>
+
+  <style>
+    :root {
+      --header-color: #002336;
+      --promo-color: #2762b1;
+      --focus: #ffcc00;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: #fff;
+    }
+
+    /* PROMO */
+    .promo-bar {
+      width: 100%;
+      height: 50px;
+      background: var(--promo-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    /* HEADER */
+    .site-header {
+      width: 100%;
+      height: 100px;
+      background: var(--header-color);
+    }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 650px;
+      overflow: hidden;
+    }
+
+    .hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 70%;
+      display: block;
+    }
+
+    /* HERO BUTTONS */
+    .hero-buttons {
+      position: absolute;
+      bottom: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+
+      display: flex;
+      gap: 28px;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: nowrap;
+    }
+
+    .hero-btn {
+      display: inline-block;
+
+      padding: 38px 72px;
+      font-size: 18px;
+
+      background: #fff;
+      color: #002336;
+
+      border-radius: 999px;
+      text-decoration: none;
+
+      font-weight: 900;
+      letter-spacing: 0.6px;
+
+      box-shadow: 0 10px 24px rgba(0,0,0,0.30);
+
+      transition: transform 0.15s ease, opacity 0.15s ease;
+
+      white-space: nowrap;
+      min-height: 48px;
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    .hero-btn:hover {
+      transform: translateY(-3px);
+      opacity: 0.92;
+    }
+
+    .hero-btn:focus {
+      outline: 3px solid var(--focus);
+      outline-offset: 4px;
+    }
+
+    /* FOOTER */
+    .footer {
+      width: 100%;
+      height: 400px;
+      background: var(--header-color);
+      color: white;
+
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+
+      padding-top: 35px;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+
+      width: 100%;
+      max-width: 1000px;
+      gap: 80px;
+    }
+
+    .footer-column h3 {
+      margin-bottom: 16px;
+      font-size: 18px;
+    }
+
+    .footer-column a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+
+    .footer-column a:hover {
+      text-decoration: underline;
+    }
+
+    /* CONTACT ITEMS */
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 14px;
+      font-size: 14px;
+    }
+
+    .icon {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* LEGAL BAR */
+    .legal-bar {
+      width: 100%;
+      background: #001722;
+      color: white;
+      text-align: center;
+      font-size: 11px;
+      padding: 12px 10px;
+    }
+
+    .legal-bar a {
+      color: white;
+      text-decoration: underline;
+      cursor: pointer;
+      margin: 0 6px;
+    }
+
+    /* MODALS */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .modal-content {
+      background: white;
+      color: #111;
+      max-width: 600px;
+      width: 90%;
+      padding: 20px;
+      border-radius: 10px;
+      position: relative;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      background: #002336;
+      color: white;
+      border: none;
+      padding: 6px 10px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    /* ACCESSIBILITY */
+    a:focus {
+      outline: 3px solid var(--focus);
+      outline-offset: 3px;
+    }
+
+    /* MOBILE */
+    @media (max-width: 600px) {
+
+      .hero-buttons {
+        flex-direction: column;
+        gap: 14px;
+        bottom: 40px;
+        padding: 0 16px;
+      }
+
+      .hero-btn {
+        width: 90%;
+        text-align: center;
+        padding: 22px 28px;
+        font-size: 15px;
+      }
+
+      .hero img {
+        object-position: center;
+      }
+
+      .site-header {
+        height: 80px;
+      }
+
+      .footer {
+        height: auto;
+        padding: 30px 20px;
+      }
+
+      .footer-content {
+        flex-direction: column;
+        gap: 40px;
+        text-align: center;
+        align-items: center;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- PROMO -->
+  <div class="promo-bar">
+    #OURTHREADSBEFLYIN'
+  </div>
+
+  <!-- HEADER -->
+  <header class="site-header"></header>
+
+  <!-- HERO -->
+  <section class="hero">
+
+    <img
+      src="https://cdn.inksoft.com/images/publishers/18663/stores/testosum/img/customContent/MERCH_STORE_(3).png?Date=1777578857439"
+      alt="Main store banner showing featured merchandise"
+    />
+
+    <div class="hero-buttons">
+
+      <a href="https://www.missouriembroidery.com/Blucurrentcompanystore/shop/home"
+         class="hero-btn"
+         aria-label="Shop with company credit">
+        SHOP WITH COMPANY CREDIT
+      </a>
+
+      <a href="https://www.missouriembroidery.com/blu_current_merch_store/shop/home"
+         class="hero-btn"
+         aria-label="Shop personal purchases">
+        SHOP PERSONAL PURCHASES
+      </a>
+
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-content">
+
+      <!-- NAVIGATION -->
+      <div class="footer-column">
+        <h3>Navigation</h3>
+        <a href="#">Home</a>
+        <a href="https://www.missouriembroidery.com/Blucurrentcompanystore/shop/home">Company Credit</a>
+        <a href="https://www.missouriembroidery.com/blu_current_merch_store/shop/home">Personal Purchases</a>
+      </div>
+
+      <!-- CONTACT -->
+      <div class="footer-column">
+        <h3>Contact Us</h3>
+
+        <!-- Address -->
+        <div class="contact-item">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="white" d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/>
+          </svg>
+          <span>1307 S Glenstone Ave, Springfield MO, 65804</span>
+        </div>
+
+        <!-- Phone -->
+        <div class="contact-item">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="white" d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1V20a1 1 0 01-1 1C10.61 21 3 13.39 3 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.46.57 3.58a1 1 0 01-.25 1.01l-2.2 2.2z"/>
+          </svg>
+          <span>417-889-2221</span>
+        </div>
+
+        <!-- Email -->
+        <div class="contact-item">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="white" d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+          </svg>
+          <span>hello@moembroidery.com</span>
+        </div>
+
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- LEGAL -->
+  <div class="legal-bar">
+    <a onclick="openModal('terms')">Terms of Use</a> |
+    <a onclick="openModal('privacy')">Privacy Policy</a> |
+    <a onclick="openModal('refund')">Refund Policy</a> |
+    <a onclick="openModal('delivery')">Delivery Policy</a> |
+    <a onclick="openModal('color')">Color Disclaimer</a> |
+    <a onclick="openModal('report')">Report a Problem</a>
+    <br>
+    © 2026 Blu Current Company Store
+  </div>
+
+  <!-- MODALS -->
+  <div id="terms" class="modal" role="dialog" aria-modal="true">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal()">Close</button>
+      <h2>Terms of Use</h2>
+      <p>We strive for 100% Customer Satisfaction. If you are not completely satisfied with your products or Service, please contact us immediately.</p>
+    </div>
+  </div>
+
+  <div id="privacy" class="modal" role="dialog" aria-modal="true">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal()">Close</button>
+      <h2>Privacy Policy</h2>
+      <p>We value and respect the privacy of our customers. We collect and use information to fulfill orders.</p>
+    </div>
+  </div>
+
+  <div id="refund" class="modal" role="dialog" aria-modal="true">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal()">Close</button>
+      <h2>Refund Policy</h2>
+      <p>If you are not 100% satisfied, please contact us. Refunds may not apply to all orders.</p>
+    </div>
+  </div>
+
+  <div id="delivery" class="modal" role="dialog" aria-modal="true">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal()">Close</button>
+      <h2>Delivery Policy</h2>
+      <p>Tracking information will be provided once your order ships.</p>
+    </div>
+  </div>
+
+  <div id="color" class="modal" role="dialog" aria-modal="true">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal()">Close</button>
+      <h2>Color Disclaimer</h2>
+      <p>Colors may vary depending on screen settings and device displays.</p>
+    </div>
+  </div>
+
+  <div id="report" class="modal" role="dialog" aria-modal="true">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal()">Close</button>
+      <h2>Report a Problem</h2>
+      <p>Please contact support if you experience any issues.</p>
+    </div>
+  </div>
+
+  <script>
+    function openModal(id) {
+      document.querySelectorAll('.modal').forEach(m => m.style.display = "none");
+      const modal = document.getElementById(id);
+      modal.style.display = "flex";
+
+      const closeBtn = modal.querySelector(".close-btn");
+      if (closeBtn) closeBtn.focus();
+    }
+
+    function closeModal() {
+      document.querySelectorAll('.modal').forEach(m => m.style.display = "none");
+    }
+
+    window.addEventListener("keydown", function(e) {
+      if (e.key === "Escape") closeModal();
+    });
+
+    document.querySelectorAll('.modal').forEach(modal => {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+      });
+    });
+  </script>
+
+</body>
+</html>
